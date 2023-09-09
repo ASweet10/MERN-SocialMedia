@@ -1,0 +1,20 @@
+PROJECT SETUP - BACKEND
+>> TO START: CD backend, nodemon index.js, should run on localhost:3001
+1. type: module in package.json to use import statements instead of require
+2. CREATE MONGODB CLUSTER
+-AWS, free tier, default settings
+-Add local IP address to access list
+3. CONNECT TO MONGODB CLUSTER
+-Connect -> Connect to your application / drivers (access your data using mongo's native drivers e.g. node.js, etc.)
+-Copy connection string, place into .env file, MONGO_URL = 'string'
+-replace cluster password where it says ://dummyuser:<password>@... => dummyuser:mypassword@
+-Add to .env: PORT:3001 (Backend running on 3001)
+
+
+FRONTEND
+1. GOOGLE FONTS
+-fonts.google.com, find font, click to add weights (400, 500, 700)
+-@import option, copy code between style tags (@import url(...)), paste in index.css
+
+Authentication: Checking login credentials vs those in database
+Authorization: When user logged in, can access api endpoints normal user can't
