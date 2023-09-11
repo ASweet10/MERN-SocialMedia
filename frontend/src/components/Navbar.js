@@ -26,49 +26,52 @@ const Navbar = () => {
     }    
 
   return (
-    <div className='flex w-full h-full justify-center items-center p-4 bg-white dark:bg-bg_dark'>
-        <div className='flex justify-center items-center gap-7'>
-            <h2 className='font-bold text-3xl text-secondary hover:cursor-pointer'
-                onClick={() => navigate("/")}
-            >
-                Green Thumb
-            </h2>
+    <div className='flex w-full h-full items-center p-4 bg-white dark:bg-bg_dark'>
+        {/* DESKTOP NAV */}
+        <div className='hidden md:flex justify-between'>
+            <div className='flex justify-between items-center gap-4'>
+                <div className='flex justify-end items-center relative gap-4'>
+                    <h2 className='font-bold text-3xl text-secondary hover:cursor-pointer' onClick={() => navigate("/")}>
+                        Green Thumb
+                    </h2>
+                    <input onChange={(e) => setSearchQuery(e.target.value)} // (e) is value supplied by input
+                        className='h-8 rounded-md p-2 outline-none border-none'
+                        placeholder='Search...'
+                        value={ searchQuery }
+                        type="string" // Expects email, not string
+                    />
+                    <IconContext.Provider value={{color: 'gray', size: '10px'}}>
+                        {/* width: placement within box; height: size of image */}
+                        <BiSearch className='absolute w-1/6 h-5 cursor-pointer'/>
+                    </IconContext.Provider>
+                </div>
 
-            {/* DESKTOP NAV */}
-            <div className='hidden md:flex'>
-                <div className='flex justify-center items-center gap-8'>
-                    <div className='flex justify-end items-center relative'>
-
-                        <input onChange={(e) => setSearchQuery(e.target.value)} // (e) is value supplied by input
-                            className='h-8 rounded-md p-2 outline-none border-none'
-                            placeholder='Search...'
-                            value={ searchQuery }
-                            type="string" // Expects email, not string
-                        />
-                        <IconContext.Provider value={{color: 'gray', size: '10px'}}>
-                            {/* width: placement within box; height: size of image */}
-                            <BiSearch className='absolute w-1/5 h-5 cursor-pointer'/>
-                        </IconContext.Provider>
-                    </div>
-                    {/* Dark Mode here */}
+                <div className='flex flex-row gap-8'>
                     <BiMessageDetail size={30} className='cursor-pointer text-secondary' />
                     <IoIosNotifications size={30} className='cursor-pointer text-secondary' />
                     <BiHelpCircle size={30} className='cursor-pointer text-secondary' />
+                    {/* Dark Mode here */}
                     <h3 className='font-bold capitalize text-lg text-secondary' value={ user ? fullName : '' }>{ user ? fullName : '' }</h3>
                     <h3 className='font-bold capitalize text-lg text-secondary cursor-pointer' 
                         onClick={() => handleLogout()}
                     >
                         { user ? 'Logout' : '' }
                     </h3>
-                </div>                
-            </div>
+                </div>
+            </div>                
+        </div>
 
-            {/* MOBILE MENU BARS */}
-            <div onClick={() => setMobileMenuToggled(!mobileMenuToggled)} className='cursor-pointer pl-4 z-10 md:hidden'>
+        {/* MOBILE MENU BARS */}
+        <div className='flex justify-between md:hidden'>
+            <h2 className='font-bold text-3xl text-secondary hover:cursor-pointer' onClick={() => navigate("/")}>
+                Green Thumb
+            </h2>
+            <div onClick={() => setMobileMenuToggled(!mobileMenuToggled)} className='cursor-pointer pl-8 z-10 md:hidden'>
                 {mobileMenuToggled ? <FaTimes className='text-secondary dark:text-textColor' size={30}/> 
                     : <FaBars className='text-secondary dark:text-textColor' size={30}/> }
             </div>
         </div>
+
     </div>
   )
 }

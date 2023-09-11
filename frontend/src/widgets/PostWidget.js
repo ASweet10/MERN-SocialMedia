@@ -41,7 +41,7 @@ const PostWidget = ({
 
       <Friend friendId={postUserId} name={name} subtitle={location} userPicturePath={userPicturePath} />
       <p className='mt-4'>{description}</p>
-      {picturePath && ( <img alt="post" className='border-3 w-full max-h-64 overflow-hidden mt-3' src={`http://localhost:3001/assets/${picturePath}`} /> )}
+      {picturePath && ( <img alt="post" className='border-3 w-full h-auto overflow-hidden mt-3' src={`http://localhost:3001/assets/${picturePath}`} /> )}
 
       <div className='flex justify-between items-center mt-4'>
         <div className='flex justify-between items-center gap-4'>

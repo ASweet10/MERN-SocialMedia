@@ -13,19 +13,27 @@ const HomePage = () => {
     return (
         <div>
             <Navbar />
-            <div className="block md:flex w-full justify-center items-center bg-bg">
-                <div className='flex m-6 p-6 md:p-2 md:m-2'>
+            <div className="block md:flex w-full justify-center bg-bg">
+                
+                <div className='flex basis-3/12 pt-8 md:p-2 md:mt-8'>
                     <UserWidget userId={_id} picturePath={picturePath} />
                 </div>
-                <div className='flex flex-col m-6 p-6 md:p-2 md:m-2'>
-                    <NewPostWidget picturePath={picturePath} />
-                {/* <PostsWidget userId={_id} /> */}
-                    <PostsWidget userId={_id} />
                 
+                {/*}
+                {largerThanMobile && (
+                    <div className='flex basis-3/12 flex-col md:p-2 md:mt-8'>
+                        <AdvertWidget />
+                        <FriendsListWidget userId={_id} />
+                    </div>
+                )}
+                */}
+                <div className='flex basis-5/12 flex-col gap-4 p-6 md:p-2 md:mt-8'>
+                    <NewPostWidget picturePath={picturePath} />
+                    <PostsWidget userId={_id} />                
                 </div>
                 {/* Friend's list; only shows on desktop */}
                 {largerThanMobile && (
-                    <div className='flex flex-col m-6 p-6 md:p-2 md:m-2'>
+                    <div className='flex basis-3/12 flex-col md:p-2 md:mt-8'>
                         <AdvertWidget />
                         <FriendsListWidget userId={_id} />
                     </div>

@@ -13,6 +13,7 @@ module.exports = {
       pureWhite: '#FFFFFF',
       white: '#ebebeb',
       gray: '#d1d1d1',
+      red: '#570003'
     }
   },
   plugins: [],

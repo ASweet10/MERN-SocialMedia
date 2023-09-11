@@ -3,12 +3,12 @@ import UserImage from "components/UserImage"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setPosts } from "state/stateIndex"
-import { Divider, useMediaQuery } from "@mui/material"
+import { useMediaQuery } from "@mui/material"
 import { AiOutlineEdit, AiFillDelete, AiOutlineGif } from 'react-icons/ai'
 import { BiImage } from "react-icons/bi"
-import { BsMicFill } from "react-icons/bs"
 import { IoMdAttach } from "react-icons/io"
-import { FiMoreHorizontal } from 'react-icons/fi'
+import { RxVideo } from "react-icons/rx"
+import { IconButton } from '@mui/material'
 
 const NewPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch()
@@ -39,90 +39,87 @@ const NewPostWidget = ({ picturePath }) => {
         setPost("")
     }
 
+    const handleChange = (event) => {
+        //setImage(URL.createObjectURL(event.target.files[0]))
+        /*
+        try {
+            console.log(event.target.files)
+            setImage(URL.createObjectURL(event.target.files[0]))
+        } catch {
+            alert('You can only upload .mp4, .jpg, .jpeg, .png')
+            return
+        }
+        */
+    }
+
     return (
-        <div className="p-4 mx-2 bg-white rounded-md shadow-md shadow-secondary">
+        <div className="flex flex-col p-4 mx-2 bg-white rounded-md shadow-md shadow-secondary">
             <div className="flex gap-4 items-center">
                 { largerThanMobile && ( <UserImage image={picturePath} className="rounded-full"/>) }
-                <input 
-                    placeholder="What's on your mind?"
+                <p className="font-bold text-xl text-secondary">What's on your mind?</p>
+            </div>
+            <div className="flex flex-col pt-4">
+                <textarea 
                     onChange={ (e) => setPost(e.target.value) }
                     value={post}
-                    className="rounded-md px-12 py-2"
+                    type="textarea"
+                    className="p-8 w-full text-md rounded-md border"
                 >
-                </input>
-            </div>
-            <Divider sx={{ margin: "0.75rem 0"}} />
+                </textarea>
+                <div className="flex flex-row justify-between pt-4">
+                    <div className="flex flex-row gap-4">
+                    <input 
+                        type="file"
+                        id="fileInput"
+                        onChange={handleChange()}
+                        className="file:rounded-lg file:bg-secondary file:text-white file:font-bold file:border-none hidden"
+                    />
+                    
+                    <label for="fileInput" className=" rounded-full p-4 cursor-pointer bg-secondary">
+                        <BiImage className="text-xl text-white" />
+                    </label>
+                    
+                    {/*
+                    <label for="fileInput" className="bg-secondary text-white rounded-lg">Click to upload an image</label>
+                    */}
+                    </div>
+                    <button disabled={!post} onClick={handlePost} className="rounded-md font-bold text-lg px-3 bg-secondary text-white">
+                        POST
+                    </button>
+                </div>
+                
 
+            </div>
+            
             {isImage && (
-                <div className=" bg-primary rounded-md">
-                    <div className="border-4 border-solid mt-2 p-4">
+                <div className="bg-primary rounded-md">
+                    <div className="px-6 py-1">
                         <Dropzone accepted='.jpg, .jpeg, .png' multiple={false}
-                            onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
+                            onDrop={handleChange()}
                         >
                             {({ getRootProps, getInputProps }) => (
-                                <div className="border-solid border-2 p-4 rounded-md">
+                                <div className="border-secondary border-2 p-3 rounded-md">
                                     <div {...getRootProps()} 
-                                        className='flex w-full justify-center items-center border-2 border-dashed border-primary p-4 hover:cursor-pointer'
+                                        className='flex justify-center items-center border-2 border-dashed border-primary p-4 hover:cursor-pointer'
                                     >
                                         <input {...getInputProps()} />
                                         {!image ? (
-                                            <p className="text-textColor">Add image</p>
+                                            <p className="text-white">Add image</p>
                                         ) : (
                                             <div>
-                                                <p className="text-textColor text-sm">{image.name}</p>
-                                                <AiOutlineEdit/>
+                                                <img alt="" src={image} />
+                                                {/* <p className="text-textColor text-sm">{image.name}</p> */}
                                             </div>
                                         )}
                                     </div>
-                                    {image && (
-                                        <div>
-                                            <AiFillDelete />
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </Dropzone>
                     </div>
+
                 </div>
             )}
 
-
-            <div className="flex flex-row p-6 bg-white rounded-md">
-                <div className="p-4 bg-white rounded-md gap-1" onClick={() => setIsImage(!isImage)}>
-                    <BiImage />
-                    <p className="text-textColor hover:cursor-pointer">Image</p>
-                </div>
-
-                {largerThanMobile ? (
-                    <div className="flex flex-row gap-4">
-                        <div className="bg-white rounded-md gap-1">
-                            <AiOutlineGif />
-                            <p className="text-textColor">Clip</p>  
-                        </div>
-                        <div className="bg-white rounded-md gap-1">
-                            <IoMdAttach />
-                            <p className="text-textColor">Attachment</p>  
-                        </div>
-                        <div className="bg-white rounded-md gap-1">
-                            <BsMicFill />
-                            <p className="text-textColor">Audio</p>
-                        </div>
-
-                    </div>
-                ) : (
-                    <div className="p-6 bg-primary rounded-md gap-1">
-                        <FiMoreHorizontal />
-                    </div>
-                )}
-
-                <button 
-                    disabled={!post}
-                    onClick={handlePost}
-                    className="bg-primary text-textColor rounded-full p-2"
-                >
-                    POST
-                </button>
-            </div>
         </div>
     )
 }
