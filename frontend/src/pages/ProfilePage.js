@@ -30,16 +30,16 @@ const ProfilePage = () => {
     if(!user) return null
 
     return (
-        <div className="flex w-full h-full text-black justify-center items-center bg-bg">
+        <div>
             <Navbar />
-            <div className="block md:flex w-full h-screen justify-center items-center gap-8 bg-bg">
-                <div className='flex md:basis-1/3 m-8 p-6 md:p-2 md:m-2'>
+            <div className="block md:flex w-full justify-center bg-bg">
+                <div className='flex basis-5/12 flex-col md:p-2 md:mt-8'>
                     <UserWidget userId={userId} picturePath={user.picturePath} />
                     <FriendsListWidget userId={userId} />
                 </div>
-                <div className='flex flex-col md:basis-1/2 m-8 p-6 md:p-2 md:m-2'>
-                    <NewPostWidget picturePath={user.picturePath} />
-                    <PostsWidget userId={userId} isProfile />                
+                <div className='flex basis-5/12 flex-col gap-4 p-6 md:p-2 md:mt-8'>
+                    {/*  <NewPostWidget picturePath={user.picturePath} /> */}
+                    <PostsWidget userId={userId} isProfile />
                 </div>
             </div>
         </div>

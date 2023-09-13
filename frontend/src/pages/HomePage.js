@@ -15,7 +15,7 @@ const HomePage = () => {
             <Navbar />
             <div className="block md:flex w-full justify-center bg-bg">
                 
-                <div className='flex basis-3/12 pt-8 md:p-2 md:mt-8'>
+                <div className='flex basis-3/12 flex-col md:p-2 md:mt-8'>
                     <UserWidget userId={_id} picturePath={picturePath} />
                 </div>
                 

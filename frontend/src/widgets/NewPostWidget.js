@@ -1,6 +1,6 @@
 import Dropzone from "react-dropzone"
 import UserImage from "components/UserImage"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setPosts } from "state/stateIndex"
 import { useMediaQuery } from "@mui/material"
@@ -13,7 +13,8 @@ import { IconButton } from '@mui/material'
 const NewPostWidget = ({ picturePath }) => {
     const dispatch = useDispatch()
     const [ isImage, setIsImage ] = useState(false)
-    const [ image, setImage ] = useState(null)
+    const [ image, setImage ] = useState()
+    const [ preview, setPreview ] = useState()
     const [ post, setPost ] = useState("")
     const { _id } = useSelector((state) => state.user)
     const token = useSelector((state) => state.token)
@@ -38,18 +39,22 @@ const NewPostWidget = ({ picturePath }) => {
         setImage(null)
         setPost("")
     }
-
-    const handleChange = (event) => {
-        //setImage(URL.createObjectURL(event.target.files[0]))
-        /*
-        try {
-            console.log(event.target.files)
-            setImage(URL.createObjectURL(event.target.files[0]))
-        } catch {
-            alert('You can only upload .mp4, .jpg, .jpeg, .png')
+    useEffect(() => {
+        if(!image) {
+            setPreview(undefined)
             return
         }
-        */
+
+        const objectUrl = URL.createObjectURL(image)
+        setPreview(objectUrl)
+    }, [image])
+    const onSelectFile = e => {
+        if(!e.target.files || e.target.files.length === 0) {
+            setImage(undefined)
+            return
+        }
+
+        setImage(e.target.files[0])
     }
 
     return (
@@ -63,26 +68,33 @@ const NewPostWidget = ({ picturePath }) => {
                     onChange={ (e) => setPost(e.target.value) }
                     value={post}
                     type="textarea"
-                    className="p-8 w-full text-md rounded-md border"
+                    className="p-2 w-full text-md rounded-md border"
                 >
                 </textarea>
+
                 <div className="flex flex-row justify-between pt-4">
                     <div className="flex flex-row gap-4">
                     <input 
                         type="file"
                         id="fileInput"
-                        onChange={handleChange()}
+                        onChange={ onSelectFile }
                         className="file:rounded-lg file:bg-secondary file:text-white file:font-bold file:border-none hidden"
                     />
                     
-                    <label for="fileInput" className=" rounded-full p-4 cursor-pointer bg-secondary">
+                    <label htmlFor="fileInput" className=" rounded-full p-4 cursor-pointer bg-secondary">
                         <BiImage className="text-xl text-white" />
                     </label>
+
+
                     
-                    {/*
-                    <label for="fileInput" className="bg-secondary text-white rounded-lg">Click to upload an image</label>
-                    */}
                     </div>
+
+                    { preview && ( 
+                        <div>
+                            <img src={preview} className="h-1/8 w-1/4" />
+                        </div> 
+                        )
+                    }
                     <button disabled={!post} onClick={handlePost} className="rounded-md font-bold text-lg px-3 bg-secondary text-white">
                         POST
                     </button>
@@ -95,7 +107,7 @@ const NewPostWidget = ({ picturePath }) => {
                 <div className="bg-primary rounded-md">
                     <div className="px-6 py-1">
                         <Dropzone accepted='.jpg, .jpeg, .png' multiple={false}
-                            onDrop={handleChange()}
+                            //onDrop={handleChange()}
                         >
                             {({ getRootProps, getInputProps }) => (
                                 <div className="border-secondary border-2 p-3 rounded-md">
